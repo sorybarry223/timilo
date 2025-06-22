@@ -120,3 +120,7 @@ testPayment();
 ## Support
 
 If you encounter issues or have questions, please open an issue on the GitHub repository or contact your Orange Money account manager.
+
+## License
+
+MIT License © 2025 Sory BARRY
