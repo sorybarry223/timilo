@@ -7,6 +7,7 @@ interface GeneratePaymentLinkInput {
     merchantKey: string;
     orderId: string;
     totalPrice: number;
+    currency?: string;
     returnUrl: string;
     cancelUrl: string;
     notifUrl: string;

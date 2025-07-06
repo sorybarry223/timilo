@@ -8,7 +8,7 @@ export async function generatePaymentLink(
 ): Promise<GeneratePaymentLinkOutput> {
   const body = {
     merchant_key: input.merchantKey,
-    currency: 'XOF',
+    currency: input.currency || 'XOF',
     order_id: input.orderId,
     amount: input.totalPrice,
     return_url: input.returnUrl,

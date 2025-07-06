@@ -35,6 +35,7 @@ Before using the SDK, you must have an Orange Money developer account and obtain
 | `merchantKey` | `string`| Your merchant secret key used to sign payment requests                                          |
 | `orderId`     | `string`| Unique identifier for each payment transaction                                                  |
 | `totalPrice`  | `number`| Amount to be paid (in the smallest currency unit, e.g., cents)                                 |
+| `currency`    | `string`| Currency code for the payment (e.g., 'XOF', 'USD', 'EUR'). Defaults to 'XOF' if not provided |
 | `returnUrl`   | `string`| URL where customers are redirected after a successful payment                                   |
 | `cancelUrl`   | `string`| URL where customers are redirected after cancelling a payment                                   |
 | `notifUrl`    | `string`| Backend URL where Orange Money sends asynchronous payment notifications       
@@ -86,6 +87,7 @@ async function testPayment() {
       merchantKey: 'your_merchant_key',
       orderId: 'ORDER_001',         // Must be unique for each transaction
       totalPrice: 1000,             // Amount in smallest currency unit
+      currency: 'XOF',
       returnUrl: 'https://example.com/success',
       cancelUrl: 'https://example.com/cancel',
       notifUrl: 'https://example.com/notify',

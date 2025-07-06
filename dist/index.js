@@ -14896,7 +14896,7 @@ async function generatePaymentLink(accessToken, paymentUrl, input) {
   var _a, _b;
   const body = {
     merchant_key: input.merchantKey,
-    currency: "XOF",
+    currency: input.currency || "XOF",
     order_id: input.orderId,
     amount: input.totalPrice,
     return_url: input.returnUrl,
