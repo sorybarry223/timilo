@@ -105,6 +105,123 @@ testPayment();
 
 ---
 
+## Testing
+
+This SDK includes a comprehensive test suite to ensure reliability and correctness. The testing architecture follows best practices with unit tests, integration tests, and proper mocking.
+
+### Test Structure
+
+```
+tests/
+├── __mocks__/
+│   └── axios.ts          # Mock for HTTP requests
+├── unit/
+│   ├── auth.test.ts      # Authentication module tests
+│   ├── payment.test.ts   # Payment module tests
+│   └── types.test.ts     # Type definitions tests
+├── integration/
+│   └── sdk.test.ts       # End-to-end SDK tests
+└── setup.ts              # Global test configuration
+```
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode (for development)
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
+
+# Run tests in CI mode
+npm run test:ci
+```
+
+### Test Coverage
+
+The test suite covers:
+
+#### Unit Tests (`tests/unit/`)
+
+- **`auth.test.ts`**: Tests the authentication module
+  - ✅ Successful token retrieval
+  - ✅ Error handling for invalid responses
+  - ✅ Network error handling
+  - ✅ Empty response handling
+
+- **`payment.test.ts`**: Tests the payment link generation
+  - ✅ Successful payment link creation
+  - ✅ Default currency handling
+  - ✅ Error handling for missing response fields
+  - ✅ Network error handling
+  - ✅ Invalid response handling
+
+- **`types.test.ts`**: Tests TypeScript type definitions
+  - ✅ Type structure validation
+  - ✅ Optional field handling
+  - ✅ Type compatibility checks
+
+#### Integration Tests (`tests/integration/`)
+
+- **`sdk.test.ts`**: Tests the complete SDK flow
+  - ✅ SDK instantiation
+  - ✅ Complete payment flow (token → payment link)
+  - ✅ Error propagation
+  - ✅ Real-world data scenarios
+
+### Test Configuration
+
+The project uses Jest with TypeScript support:
+
+- **Jest Configuration**: `jest.config.js`
+- **TypeScript Support**: `ts-jest` preset
+- **Mocking**: Axios HTTP requests are mocked
+- **Coverage**: Reports coverage for all source files
+
+### Adding New Tests
+
+When adding new functionality:
+
+1. **Unit Tests**: Add tests in `tests/unit/` for individual modules
+2. **Integration Tests**: Add tests in `tests/integration/` for complete flows
+3. **Mocks**: Update `tests/__mocks__/` if new dependencies need mocking
+4. **Types**: Add type tests in `tests/unit/types.test.ts` for new interfaces
+
+### Example Test Pattern
+
+```ts
+import { jest, describe, it, expect, beforeEach } from '@jest/globals';
+import axios from 'axios';
+
+// Mock axios
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+
+describe('Your Module', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should handle success case', async () => {
+    // Arrange
+    const mockResponse = { data: { success: true } };
+    mockedAxios.post.mockResolvedValueOnce(mockResponse);
+
+    // Act
+    const result = await yourFunction();
+
+    // Assert
+    expect(result).toBeDefined();
+    expect(mockedAxios.post).toHaveBeenCalledWith(/* expected args */);
+  });
+});
+```
+
+---
+
 ## Important Notes
 
 - **Unique orderId**: Each transaction must have a unique `orderId`. Reusing it results in errors such as HTTP 403 Forbidden.
